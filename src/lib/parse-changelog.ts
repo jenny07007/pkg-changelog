@@ -7,9 +7,12 @@ export function parseChangelog(changelog: string): ChangelogEntry[] {
   let currentEntry: Partial<ChangelogEntry> | null = null;
   let currentSection: "features" | "bug-fixes" | null = null;
 
-  // Match: ### [4.51.2](url) (2025-12-19) or ## [4.51.0](url) (2025-12-18)
+  // Match multiple formats:
+  // 1. ### [4.51.2](url) (2025-12-19) - Dynamic format
+  // 2. ## [1.0.0] - 2023-03-05 - Keep a Changelog format
+  // 3. ## [1.0.0](url) - 2023-03-05 - Keep a Changelog with link
   const versionRegex =
-    /^#{2,3}\s+\[(\d+\.\d+\.\d+)\].*?\((\d{4}-\d{2}-\d{2})\)/;
+    /^#{2,3}\s+\[(\d+\.\d+\.\d+)\](?:\([^)]*\))?\s*[-–]\s*(\d{4}-\d{2}-\d{2})|^#{2,3}\s+\[(\d+\.\d+\.\d+)\].*?\((\d{4}-\d{2}-\d{2})\)/;
 
   for (const line of lines) {
     const versionMatch = line.match(versionRegex);
@@ -24,19 +27,27 @@ export function parseChangelog(changelog: string): ChangelogEntry[] {
         });
       }
 
+      // Handle both capture group patterns
+      const version = versionMatch[1] || versionMatch[3];
+      const date = versionMatch[2] || versionMatch[4];
+
       currentEntry = {
-        version: versionMatch[1],
-        date: versionMatch[2],
+        version,
+        date,
         features: [],
         bugFixes: [],
       };
       currentSection = null;
     } else if (currentEntry) {
-      if (line.match(/^###\s+Features/i)) {
+      // Match both formats: "### Features" / "### Added" and "### Bug Fixes" / "### Fixed"
+      if (line.match(/^###\s+(Features|Added)/i)) {
         currentSection = "features";
-      } else if (line.match(/^###\s+Bug\s*Fixes/i)) {
+      } else if (line.match(/^###\s+(Bug\s*Fixes|Fixed)/i)) {
         currentSection = "bug-fixes";
-      } else if (line.trim().startsWith("*") && currentSection) {
+      } else if (line.match(/^###\s+(Changed|Deprecated|Removed|Security)/i)) {
+        // Treat other Keep a Changelog sections as features for now
+        currentSection = "features";
+      } else if ((line.trim().startsWith("*") || line.trim().startsWith("-")) && currentSection) {
         const changeText = parseChangeText(line);
 
         if (currentSection === "features") {
@@ -61,7 +72,7 @@ export function parseChangelog(changelog: string): ChangelogEntry[] {
 }
 
 function parseChangeText(line: string): string {
-  let text = line.trim().replace(/^\*\s*/, "");
+  let text = line.trim().replace(/^[*-]\s*/, "");
   // Remove markdown links but keep text: [text](url) -> text
   text = text.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1");
   // Remove commit hashes in parentheses

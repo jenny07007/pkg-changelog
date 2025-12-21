@@ -4,7 +4,7 @@ import { BorderBeam } from "@/components/ui/border-beam";
 import { cn } from "@/lib/utils";
 import type { ChangelogEntry, EntryType } from "@/types/changelog";
 import { ENTRY_TYPE_CONFIG, PREVIEW_COUNT } from "./constants";
-import { ChangeText } from "./ChangeText";
+import { ChangeText } from "./change-text";
 
 interface ChangelogItemProps {
   entry: ChangelogEntry;

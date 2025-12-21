@@ -1,6 +1,6 @@
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { SparklesText } from "@/components/ui/sparkles-text";
-import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { LoadingSpinner } from "@/components/loading-spinner";
 
 interface HeaderProps {
   inputValue: string;
@@ -21,14 +21,23 @@ export function Header({
         <SparklesText>Changelog</SparklesText>
       </h1>
       <p className="text-zinc-500 mb-6 text-center sm:text-left">
-        Track the latest updates for any npm package
+        Track npm package updates. Works with{" "}
+        <a
+          href="https://keepachangelog.com/en/1.1.0/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-zinc-400 hover:text-zinc-200 underline underline-offset-2 transition-colors"
+        >
+          Keep a Changelog
+        </a>{" "}
+        format.
       </p>
       <form onSubmit={onSubmit} className="flex flex-col sm:flex-row gap-2">
         <input
           type="text"
           value={inputValue}
           onChange={(e) => onInputChange(e.target.value)}
-          placeholder="Enter package name (e.g. react, @tanstack/react-query)"
+          placeholder="Enter package name (e.g. axios, date-fns)"
           className="flex-1 px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-zinc-600 transition-colors"
           disabled={isSearching}
         />

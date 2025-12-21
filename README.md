@@ -43,7 +43,7 @@ bun run build
 
 ## Deployment
 
-Configured for Vercel with security headers. Just connect your repo and deploy.
+Deployed on [Render](https://render.com). Just connect your repo and deploy.
 
 ## License
 

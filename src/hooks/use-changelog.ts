@@ -8,7 +8,7 @@ export function useChangelog(packageName: string) {
     queryFn: () => fetchPackageChangelog(packageName),
     enabled: packageName.length > 0,
     placeholderData: (previousData) => previousData,
-    staleTime: 60 * 60 * 1000, // Cache for 1 hour
-    refetchInterval: 60 * 60 * 1000, // Cache for 1 hour
+    staleTime: 60 * 60 * 1000,
+    refetchInterval: 60 * 60 * 1000,
   });
 }

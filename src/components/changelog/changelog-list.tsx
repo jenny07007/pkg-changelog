@@ -1,5 +1,5 @@
-import { ChangelogItem } from "./ChangelogItem";
-import { Pagination } from "./Pagination";
+import { ChangelogItem } from "./changelog-item";
+import { Pagination } from "./pagination";
 import { isNewerVersion } from "@/hooks/use-last-seen-version";
 import type { ChangelogEntry } from "@/types/changelog";
 

@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Meteors } from "@/components/ui/meteors";
-import { Header } from "@/components/Header";
-import { LoadingOverlay } from "@/components/LoadingOverlay";
-import { PackageHeader } from "@/components/PackageHeader";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
+import { LoadingOverlay } from "@/components/loading-overlay";
+import { PackageHeader } from "@/components/package-header";
 import {
   ErrorCard,
   NoChangelogCard,
   PlaceholderCard,
-} from "@/components/StatusCards";
+} from "@/components/status-cards";
 import { ChangelogList, ITEMS_PER_PAGE } from "@/components/changelog";
 import { useChangelog } from "@/hooks/use-changelog";
 import { useLastSeenVersion } from "@/hooks/use-last-seen-version";
@@ -73,6 +74,8 @@ export default function App() {
 
           {!data && !error && !isSearching && <PlaceholderCard />}
         </div>
+
+        <Footer />
       </div>
     </div>
   );
