@@ -1,5 +1,5 @@
 import { ShimmerButton } from "@/components/ui/shimmer-button";
-import { ChristmasTitle } from "@/components/ui/christmas-title";
+import { SparklesText } from "@/components/ui/sparkles-text";
 import { LoadingSpinner } from "@/components/loading-spinner";
 
 interface HeaderProps {
@@ -18,7 +18,7 @@ export function Header({
   return (
     <header className="mb-8 w-full">
       <h1 className="text-4xl font-bold mb-4 text-center sm:text-left pt-8">
-        <ChristmasTitle>Changelog</ChristmasTitle>
+        <SparklesText>Changelog</SparklesText>
       </h1>
       <p className="text-zinc-500 mb-6 text-center sm:text-left">
         Track npm package updates. Works with{" "}
