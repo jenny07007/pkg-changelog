@@ -1,0 +1,9 @@
+# robots.txt for pkg-changelog
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://pkg-changelog.onrender.com/sitemap.xml
+
+# LLMs.txt for AI assistants
+# See: https://pkg-changelog.onrender.com/llms.txt
